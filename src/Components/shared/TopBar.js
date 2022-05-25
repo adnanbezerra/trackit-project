@@ -1,7 +1,7 @@
 export default function TopBar() {
     return(
         <>
-            <p>"OIi"</p>
+            <p>Oii</p>
         </>
     )
 }

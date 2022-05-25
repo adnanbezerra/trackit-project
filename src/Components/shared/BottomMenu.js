@@ -1,7 +1,7 @@
 export default function BottomMenu() {
     return(
         <>
-            <p>"Flazudo"</p>
+            <p>Flazudo</p>
         </>
     )
 }
