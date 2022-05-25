@@ -1,26 +1,32 @@
 import { useContext, useState } from "react"
 import UserContext from "./contexts/UserContext"
 import logo from "./Images/logo.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
-
 import styled from "styled-components";
 
+import { ThreeDots } from 'react-loader-spinner';
+
 export default function InitialScreen() {
+    const navigate = useNavigate();
+
     const { loginToken, setLoginToken } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
 
-    function submitForm() {
-        const user = {email: email, password: password}
-        console.log("que viage é essa ein boy")
-        console.log(user)
+    function submitForm(event) {
+        event.preventDefault();
+
+        const user = { email: email, password: password }
         setDisabled(true);
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", user)
-            .then( answer => console.log(answer))
+            .then(answer => {
+                alert('deu bão blz?')
+                setLoginToken(answer.data.token)
+            })
             .catch(erro => {
                 setDisabled(false);
                 alert("Login ou senha errados! Tente novamente.")
@@ -34,7 +40,8 @@ export default function InitialScreen() {
             <Form onSubmit={submitForm}>
                 <Input type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} disabled={disabled} />
                 <Input type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} disabled={disabled} />
-                <Button disabled={disabled}> {disabled ? <></> : "Entrar"}</Button>
+                <Button disabled={disabled}> {disabled ? <ThreeDots color="white" height={80} width={50} />
+                    : "Entrar"}</Button>
             </Form>
 
             <Link to='/register'><Linko>Não tem uma conta? Cadastre-se!</Linko></Link>

@@ -1,35 +1,50 @@
 import { useContext, useState } from "react"
-import UserContext from "./contexts/UserContext"
 import logo from "./Images/logo.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
-
 import styled from "styled-components";
 
+import { ThreeDots } from 'react-loader-spinner';
+
 export default function RegisterScreen() {
-    const { loginToken, setLoginToken } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [newUser, setNewUser] = useState({
         email: "",
         name: "",
         image: "",
         password: ""
     })
-
     const [disabled, setDisabled] = useState(false);
 
-    function submitForm() {
-        if(!newUser.image.startsWith("https://")) {
+    function clearInputs() {
+        setNewUser({
+            email: "",
+            name: "",
+            image: "",
+            password: ""
+        })
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+
+        if (!newUser.image.startsWith("https://")) {
             alert("Insira um link de imagem válido!");
             return;
         }
 
         setDisabled(true);
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", newUser)
-            .then( e => console.log('deu bão lekote'))
+            .then(e => {
+                alert("Cadastro concluído! Agora faça o login")
+                navigate('/')
+            })
             .catch(e => {
-                setDisabled(true);
                 alert("Falha no cadastro! Tente novamente.")
+                clearInputs();
+                setDisabled(false);
             })
     }
 
@@ -38,12 +53,13 @@ export default function RegisterScreen() {
             <Link to='/'> <img src={logo} alt="" /> </Link>
 
             <Form onSubmit={submitForm} >
-                <Input type="email" placeholder='email' value={newUser.email} onChange={e => setNewUser({...newUser, email: e.target.value})} disabled={disabled} />
-                <Input type='password' placeholder='senha' value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} disabled={disabled} />
-                <Input type='text' placeholder='nome' value={newUser.name} onChange={e => setNewUser({...newUser, name: e.target.value})} disabled={disabled} />
-                <Input type='text' placeholder='foto' value={newUser.image} onChange={e => setNewUser({...newUser, image: e.target.value})} disabled={disabled} />
+                <Input type="email" placeholder='email' value={newUser.email} onChange={e => setNewUser({ ...newUser, email: e.target.value })} disabled={disabled} />
+                <Input type='password' placeholder='senha' value={newUser.password} onChange={e => setNewUser({ ...newUser, password: e.target.value })} disabled={disabled} />
+                <Input type='text' placeholder='nome' value={newUser.name} onChange={e => setNewUser({ ...newUser, name: e.target.value })} disabled={disabled} />
+                <Input type='text' placeholder='foto' value={newUser.image} onChange={e => setNewUser({ ...newUser, image: e.target.value })} disabled={disabled} />
 
-                <Button disabled={disabled}>{disabled ? <></> : "Cadastrar"}</Button>
+                <Button disabled={disabled}>{disabled ? <ThreeDots color="white" height={80} width={50} />
+                    : "Cadastrar"}</Button>
             </Form>
 
             <Link to='/'><Linko>Já tem uma conta? Faça login!</Linko></Link>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 
+import GlobalStyle from "./Components/styles/GlobalStyle";
 import InitialScreen from "./Components/InitialScreen";
 import TopBar from "./Components/shared/TopBar"
 import BottomMenu from "./Components/shared/BottomMenu"
@@ -16,22 +17,25 @@ export default function App() {
   const [loginToken, setLoginToken] = useState("");
 
   return (
-    <UserContext.Provider value={{ loginToken, setLoginToken }}>
-      <BrowserRouter>
+    <>
+      <GlobalStyle />
+      <UserContext.Provider value={{ loginToken, setLoginToken }}>
+        <BrowserRouter>
 
-        {loginToken ? <TopBar /> : <></>}
+          {loginToken ? <TopBar /> : <></>}
 
-        <Routes>
-          <Route path={'/'} element={<InitialScreen />} />
-          <Route path={'/register'} element={<RegisterScreen />} />
-          <Route path={'/historico'} element={<HistoryScreen />} />
-          <Route path={'/habito'} element={<HabitsScreen />} />
-          <Route path={'/hoje'} element={<TodayScreen />} />
-        </Routes>
+          <Routes>
+            <Route path={'/'} element={<InitialScreen />} />
+            <Route path={'/register'} element={<RegisterScreen />} />
+            <Route path={'/historico'} element={<HistoryScreen />} />
+            <Route path={'/habito'} element={<HabitsScreen />} />
+            <Route path={'/hoje'} element={<TodayScreen />} />
+          </Routes>
 
-        {loginToken ? <BottomMenu /> : <></>}
+          {loginToken ? <BottomMenu /> : <></>}
 
-      </BrowserRouter>
-    </UserContext.Provider>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </>
   );
 }
