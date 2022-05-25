@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import logo from "./Images/logo.png"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -37,11 +37,11 @@ export default function RegisterScreen() {
 
         setDisabled(true);
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", newUser)
-            .then(e => {
+            .then(answer => {
                 alert("Cadastro concluído! Agora faça o login")
                 navigate('/')
             })
-            .catch(e => {
+            .catch(error => {
                 alert("Falha no cadastro! Tente novamente.")
                 clearInputs();
                 setDisabled(false);

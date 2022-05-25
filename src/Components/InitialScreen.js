@@ -11,7 +11,7 @@ import { ThreeDots } from 'react-loader-spinner';
 export default function InitialScreen() {
     const navigate = useNavigate();
 
-    const { loginToken, setLoginToken } = useContext(UserContext);
+    const { setLoggedUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
@@ -24,10 +24,10 @@ export default function InitialScreen() {
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", user)
             .then(answer => {
-                alert('deu bão blz?')
-                setLoginToken(answer.data.token)
+                setLoggedUser(answer.data)
+                navigate("/habito")
             })
-            .catch(erro => {
+            .catch(error => {
                 setDisabled(false);
                 alert("Login ou senha errados! Tente novamente.")
             })

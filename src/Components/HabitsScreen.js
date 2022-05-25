@@ -1,5 +1,13 @@
+import styled from "styled-components"
+
 export default function HabitsScreen() {
     return(
-        "oii"
+        <Screen>
+            'oii'
+        </Screen>
     )
 }
+
+const Screen = styled.div`
+    background-color: #E5E5E5;
+`

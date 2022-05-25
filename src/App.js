@@ -14,28 +14,29 @@ import RegisterScreen from "./Components/RegisterScreen";
 
 export default function App() {
 
-  const [loginToken, setLoginToken] = useState("");
+  const [loggedUser, setLoggedUser] = useState();
 
   return (
-    <>
+    <UserContext.Provider value={{ loggedUser, setLoggedUser }}>
+
       <GlobalStyle />
-      <UserContext.Provider value={{ loginToken, setLoginToken }}>
-        <BrowserRouter>
 
-          {loginToken ? <TopBar /> : <></>}
+      <BrowserRouter>
 
-          <Routes>
-            <Route path={'/'} element={<InitialScreen />} />
-            <Route path={'/register'} element={<RegisterScreen />} />
-            <Route path={'/historico'} element={<HistoryScreen />} />
-            <Route path={'/habito'} element={<HabitsScreen />} />
-            <Route path={'/hoje'} element={<TodayScreen />} />
-          </Routes>
+        {loggedUser ? <TopBar /> : <></>}
 
-          {loginToken ? <BottomMenu /> : <></>}
+        <Routes>
+          <Route path={'/'} element={<InitialScreen />} />
+          <Route path={'/register'} element={<RegisterScreen />} />
+          <Route path={'/historico'} element={<HistoryScreen />} />
+          <Route path={'/habito'} element={<HabitsScreen />} />
+          <Route path={'/hoje'} element={<TodayScreen />} />
+        </Routes>
 
-        </BrowserRouter>
-      </UserContext.Provider>
-    </>
+        {loggedUser ? <BottomMenu /> : <></>}
+
+      </BrowserRouter>
+
+    </UserContext.Provider>
   );
 }
