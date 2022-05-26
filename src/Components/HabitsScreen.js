@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import UserContext from "./contexts/UserContext"
+import WeekDay from "./HabitsAssets/WeekDay";
+import Habit from "./HabitsAssets/Habit";
 
 import styled from "styled-components"
 import axios from "axios";
@@ -10,6 +12,7 @@ export default function HabitsScreen() {
     const [habitsList, setHabitsList] = useState([]);
     const [addTask, setAddTask] = useState(false);
     const [habitName, setHabitName] = useState("")
+    const [weekDaysList, setWeekDaysList] = useState([])
 
     const config = {
         headers: {
@@ -19,22 +22,47 @@ export default function HabitsScreen() {
     useEffect(() => getHabitsList(), [])
 
     function getHabitsList() {
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
-            .then(answer => {
-                console.log("deu bão")
-                console.log(answer)})
-            .catch(error => {
-                console.log("deu bãon't")
-                console.log(error)
-            })
+        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+            .then(answer => setHabitsList(answer.data))
+            .catch(error => alert("Estamos com problema no servidor. Tente novamente mais tarde."))
     }
 
-    function submitForm() {
+    function submitForm(event) {
+        event.preventDefault();
+        const habit = {
+            name: habitName,
+            days: weekDaysList
+        };
 
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config)
+            .then((answer) => getHabitsList())
+            .catch((error) => console.log(error))
     }
 
     function invertAddTask() {
         setAddTask(!addTask)
+    }
+
+    function getAddTask() {
+        return (
+            <Form onSubmit={submitForm}>
+                <FormInput placeholder="nome do hábito" type='text' value={habitName} onChange={e => setHabitName(e.target.value)} />
+                <WeekDaysRow>
+                    <WeekDay day='D' id='1' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='S' id='2' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='T' id='3' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='Q' id='4' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='Q' id='5' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='S' id='6' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='S' id='7' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                </WeekDaysRow>
+
+                <ButtonsRow>
+                    <Cancel onClick={invertAddTask} >Cancelar</Cancel>
+                    <SaveButton>Salvar</SaveButton>
+                </ButtonsRow>
+            </Form>
+        )
     }
 
     return (
@@ -44,21 +72,23 @@ export default function HabitsScreen() {
                 <Button onClick={invertAddTask}>+</Button>
             </Top>
 
-            {addTask ?
-                <Form onSubmit={submitForm}>
-                    <FormInput placeholder="nome do hábito" type='text' value={habitName} onChange={ e => setHabitName(e.target.value) } />
+            {addTask ? getAddTask() : <></>}
 
-                    <ButtonsRow>
-                        <Cancel onClick={invertAddTask} >Cancelar</Cancel>
-                        <SaveButton>Salvar</SaveButton>
-                    </ButtonsRow>
-                </Form>
-                : <></>}
-            
-            {habitsList[0] ? <></> : <NoHay>Você não tem nenhum hábito cadastrado ainda. Adicione um novo hábito para começar a trackear!</NoHay>}
+            {habitsList[0] ?
+                <>
+                    {habitsList.map((habit) => {return(<Habit name={habit.name} id={habit.id} days={habit.days} config={config} getHabitsList={getHabitsList} />)})}
+                </>
+                : <NoHay>Você não tem nenhum hábito cadastrado ainda. Adicione um novo hábito para começar a trackear!</NoHay>}
         </Screen>
     )
 }
+
+const WeekDaysRow = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+    margin-top: 8px;
+`
 
 const FormInput = styled.input`
     width: 90%;
