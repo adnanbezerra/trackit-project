@@ -2,9 +2,12 @@ import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
+import { useContext } from "react"
+import UserContext from "../contexts/UserContext";
+
 
 export default function BottomMenu() {
-    const percentage = 66;
+    const { concludedHabits } = useContext(UserContext) 
 
     return (
         <Footer>
@@ -12,7 +15,7 @@ export default function BottomMenu() {
             <div style={{ width: '91px', height: '91px', marginBottom: '40px' }}>
                 <Link to='/hoje'>
                     <CircularProgressbar
-                        value={percentage}
+                        value={concludedHabits}
                         text={"Hoje"}
                         background={true}
                         backgroundPadding={6}

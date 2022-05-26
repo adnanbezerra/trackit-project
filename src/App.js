@@ -15,9 +15,10 @@ import RegisterScreen from "./Components/RegisterScreen";
 export default function App() {
 
   const [loggedUser, setLoggedUser] = useState();
+  const [concludedHabits, setConcludedHabits] = useState(0)
 
   return (
-    <UserContext.Provider value={{ loggedUser, setLoggedUser }}>
+    <UserContext.Provider value={{ loggedUser, setLoggedUser, concludedHabits, setConcludedHabits }}>
 
       <GlobalStyle />
 

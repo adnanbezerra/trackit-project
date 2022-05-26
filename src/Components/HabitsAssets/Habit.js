@@ -6,7 +6,6 @@ export default function Habit({ name, id, days, config, getHabitsList }) {
     function deleteHabit() {
         axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
             .then(answer => {
-                console.log("deu bão");
                 getHabitsList();
             })
             .catch(error => alert("Tivemos um problema ao deletar o seu hábito. Tente novamente mais tarde."))
