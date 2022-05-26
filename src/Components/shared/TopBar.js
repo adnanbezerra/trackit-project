@@ -27,7 +27,7 @@ const Header = styled.div`
     position: fixed;
     top: 0;
     padding: 0 20px;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
 
     background-color: #126BA5;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);

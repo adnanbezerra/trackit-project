@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
 
@@ -8,11 +8,24 @@ export default function BottomMenu() {
 
     return (
         <Footer>
-            <Link to='/habito'><Linko>Hábitos</Linko></Link>
-            <div style={{width: '91px', height: '91px', marginBottom: '40px'}}>
-                <Link to='/hoje'><CircularProgressbar value={percentage} text={"Hoje"} /></Link>
+            <Link to='/habito' style={{ textDecoration: 'none' }}><Linko>Hábitos</Linko></Link>
+            <div style={{ width: '91px', height: '91px', marginBottom: '40px' }}>
+                <Link to='/hoje'>
+                    <CircularProgressbar
+                        value={percentage}
+                        text={"Hoje"}
+                        background={true}
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                            textColor: 'white',
+                            backgroundColor: '#52B6FF',
+                            pathColor: 'white',
+                            trailColor: "#52B6FF"
+                        })}
+                    />
+                </Link>
             </div>
-            <Link to='/historico'><Linko>Histórico</Linko></Link>
+            <Link to='/historico' style={{ textDecoration: 'none' }}><Linko>Histórico</Linko></Link>
         </Footer>
     )
 }
@@ -27,6 +40,7 @@ const Footer = styled.div`
     width: 100%;
     position: fixed;
     bottom: 0;
+    box-sizing: border-box;
 
     background-color: white;
 

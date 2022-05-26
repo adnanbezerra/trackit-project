@@ -91,11 +91,11 @@ const Input = styled.input`
         border: 1px solid #D5D5D5;
         border-radius: 5px;
 
+        color: #666666;
         display: flex;
         align-items: center;
 
         margin-top: 6px;
-
         padding-left: 10px;
 
         ::placeholder {
