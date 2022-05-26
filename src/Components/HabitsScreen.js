@@ -35,7 +35,11 @@ export default function HabitsScreen() {
         };
 
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config)
-            .then((answer) => getHabitsList())
+            .then((answer) => {
+                getHabitsList();
+                setHabitName("");
+                setWeekDaysList([]);
+            })
             .catch((error) => console.log(error))
     }
 

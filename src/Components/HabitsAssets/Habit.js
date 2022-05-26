@@ -16,7 +16,7 @@ export default function Habit({ name, id, days, config, getHabitsList }) {
         <HabitDisplay>
             <Line>
                 <HabitTitle>{name}</HabitTitle>
-                <ion-icon styled={{ width: '15px', height: '13px' }} name="trash-outline" onClick={deleteHabit}></ion-icon>
+                <ion-icon style={{ fontSize: '15px' }} name="trash-outline" onClick={deleteHabit}></ion-icon>
             </Line>
 
             <DaysRow>
