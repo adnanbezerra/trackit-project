@@ -19,13 +19,13 @@ export default function Habit({ name, id, days, config, getHabitsList }) {
             </Line>
 
             <DaysRow>
-                <Day isSelected={days.some((number) => number === 1)}>D</Day>
-                <Day isSelected={days.some((number) => number === 2)}>S</Day>
-                <Day isSelected={days.some((number) => number === 3)}>T</Day>
+                <Day isSelected={days.some((number) => number === 0)}>D</Day>
+                <Day isSelected={days.some((number) => number === 1)}>S</Day>
+                <Day isSelected={days.some((number) => number === 2)}>T</Day>
+                <Day isSelected={days.some((number) => number === 3)}>Q</Day>
                 <Day isSelected={days.some((number) => number === 4)}>Q</Day>
-                <Day isSelected={days.some((number) => number === 5)}>Q</Day>
+                <Day isSelected={days.some((number) => number === 5)}>S</Day>
                 <Day isSelected={days.some((number) => number === 6)}>S</Day>
-                <Day isSelected={days.some((number) => number === 7)}>S</Day>
             </DaysRow>
         </HabitDisplay>
     )

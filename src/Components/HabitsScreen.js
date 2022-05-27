@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function HabitsScreen() {
 
-    const { loggedUser } = useContext(UserContext);
+    const { loggedUser, todayHabits, setTodayHabits, concludedHabits, setConcludedHabits } = useContext(UserContext);
     const [habitsList, setHabitsList] = useState([]);
     const [addTask, setAddTask] = useState(false);
     const [habitName, setHabitName] = useState("")
@@ -19,8 +19,22 @@ export default function HabitsScreen() {
             Authorization: "Bearer " + loggedUser.token
         }
     }
-    useEffect(() => getHabitsList(), [])
+    useEffect(() => {
+        getHabitsList()
+        getTodayHabits()
+    }, [])
 
+    function getTodayHabits() {
+        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
+        .then(answer => {
+            setTodayHabits([...answer.data])
+            for (let i = 0; i < todayHabits.length; i++) {
+                if (todayHabits[i].done === true) setConcludedHabits([...concludedHabits, todayHabits[i]])
+            }
+        })
+        .catch(error => console.log("deu bãon't"));
+    }
+ 
     function getHabitsList() {
         axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
             .then(answer => setHabitsList(answer.data))
@@ -33,10 +47,17 @@ export default function HabitsScreen() {
             name: habitName,
             days: weekDaysList
         };
+        setAddTask(false);
+
+        if(setWeekDaysList.length === 0) {
+            alert('Escolha pelo menos um dia!')
+            return;
+        }
 
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config)
             .then((answer) => {
                 getHabitsList();
+                getTodayHabits();
                 setHabitName("");
                 setWeekDaysList([]);
             })
@@ -52,13 +73,13 @@ export default function HabitsScreen() {
             <Form onSubmit={submitForm}>
                 <FormInput placeholder="nome do hábito" type='text' value={habitName} onChange={e => setHabitName(e.target.value)} />
                 <WeekDaysRow>
-                    <WeekDay day='D' id='1' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='S' id='2' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='T' id='3' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='D' id='0' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='S' id='1' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='T' id='2' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='Q' id='3' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
                     <WeekDay day='Q' id='4' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='Q' id='5' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    <WeekDay day='S' id='5' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
                     <WeekDay day='S' id='6' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='S' id='7' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
                 </WeekDaysRow>
 
                 <ButtonsRow>

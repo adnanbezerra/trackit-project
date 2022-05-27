@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import UserContext from "./contexts/UserContext"
 import DailyHabit from "./HabitsAssets/DailyHabit"
 
@@ -6,40 +6,43 @@ import styled from "styled-components"
 import dayjs from "dayjs"
 import { locale } from "dayjs/locale/pt-br"
 import axios from "axios"
+import { useEffect } from "react"
 
 export default function TodayScreen() {
 
-    const [todayHabits, setTodayHabits] = useState([])
-
-    const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext);
+    const { loggedUser, setTodayHabits, concludedHabits, todayHabits, setConcludedHabits } = useContext(UserContext);
     const config = {
         headers: {
             Authorization: "Bearer " + loggedUser.token
         }
     }
-    useEffect(() => {
-        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
-            .then(answer => {
-                setTodayHabits([...answer.data])
-                for (let i = 0; i < todayHabits.length; i++) {
-                    if (todayHabits[i].done === true) setConcludedHabits([...concludedHabits, todayHabits[i]])
-                }
-            })
-            .catch(error => console.log("deu bãon't"));
-    }, [])
+    useEffect( getTodayHabits, [])
 
-    console.log(todayHabits)
+
+    function getTodayHabits() {
+        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
+        .then(answer => {
+            setTodayHabits([...answer.data])
+            for (let i = 0; i < todayHabits.length; i++) {
+                if (todayHabits[i].done === true) setConcludedHabits([...concludedHabits, todayHabits[i]])
+            }
+        })
+        .catch(error => console.log("deu bãon't"));
+    }
 
     const now = dayjs().locale('pt-br')
     let today = now.format('dddd')
     today = today.charAt(0).toUpperCase() + today.slice(1)
 
+    let percentage = 0;
+    if(todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
+
     return (
         <Screen>
             <ScreenTitle>{today} - {now.format('DD/MM')}</ScreenTitle>
-            {concludedHabits ? <></> : <TextoHabito concluido={false}>Nenhum hábito concluído ainda</TextoHabito>}
+            {concludedHabits ? <TextoHabito concluido={true}>{percentage}% dos hábitos concluídos</TextoHabito> : <TextoHabito concluido={false}>Nenhum hábito concluído ainda</TextoHabito>}
 
-            {todayHabits ? todayHabits.map((habit) => <DailyHabit name={habit.name} isConcluded={habit.done} streak={habit.currentSequence} record={habit.highestSequence} />)
+            {todayHabits ? todayHabits.map((habit) => <DailyHabit id={habit.id} name={habit.name} isConcluded={habit.done} streak={habit.currentSequence} record={habit.highestSequence} config={config} getTodayHabits={getTodayHabits} />)
 
                 : <Content>Você não tem hábitos cadastrados para hoje</Content>}
         </Screen>

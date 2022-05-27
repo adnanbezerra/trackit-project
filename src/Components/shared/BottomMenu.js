@@ -7,7 +7,12 @@ import UserContext from "../contexts/UserContext";
 
 
 export default function BottomMenu() {
-    const { concludedHabits } = useContext(UserContext) 
+    const { concludedHabits, todayHabits } = useContext(UserContext) 
+    let percentage = 0;
+    let text = 'Hoje'
+
+    if(todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
+    else text = "Não há"
 
     return (
         <Footer>
@@ -15,8 +20,8 @@ export default function BottomMenu() {
             <div style={{ width: '91px', height: '91px', marginBottom: '40px' }}>
                 <Link to='/hoje'>
                     <CircularProgressbar
-                        value={concludedHabits}
-                        text={"Hoje"}
+                        value={percentage}
+                        text={text}
                         background={true}
                         backgroundPadding={6}
                         styles={buildStyles({

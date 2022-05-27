@@ -16,9 +16,10 @@ export default function App() {
 
   const [loggedUser, setLoggedUser] = useState();
   const [concludedHabits, setConcludedHabits] = useState(0)
+  const [todayHabits, setTodayHabits] = useState([])
 
   return (
-    <UserContext.Provider value={{ loggedUser, setLoggedUser, concludedHabits, setConcludedHabits }}>
+    <UserContext.Provider value={{ loggedUser, setLoggedUser, concludedHabits, setConcludedHabits, todayHabits, setTodayHabits }}>
 
       <GlobalStyle />
 

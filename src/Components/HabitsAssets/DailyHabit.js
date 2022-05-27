@@ -1,6 +1,35 @@
+import axios from "axios";
 import styled from "styled-components";
 
-export default function DailyHabit({ name, isConcluded, streak, record }) {
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
+import { useState } from "react";
+
+export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, record, id }) {
+
+    const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
+
+    const config = {
+        headers: {
+            Authorization: "Bearer " + loggedUser.token
+        }
+    }
+
+    function taskClick() {
+        if (!isConcluded) {
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config)
+                .then(answer => {
+                    getTodayHabits();
+                    setConcludedHabits(concludedHabits + 1)
+                })
+                .catch(error => alert("Não foi possível dar check no hábito!"))
+        } else {
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config)
+                .then(answer => console.log('deu bão'))
+                .catch(error => console.log("num deu bão"))
+        }
+    }
+
     return (
         <HabitScreen>
             <InfoRow>
@@ -9,7 +38,7 @@ export default function DailyHabit({ name, isConcluded, streak, record }) {
                 <TitleData>Seu recorde: <Daily isConcluded={isConcluded}>{record === 1 ? `${record} dia` : `${record} dias`}</Daily></TitleData>
             </InfoRow>
 
-            <ion-icon name="checkbox" isConcluded={isConcluded}></ion-icon>
+            <ion-icon name="checkbox" onClick={taskClick} isConcluded={isConcluded}></ion-icon>
         </HabitScreen>
     )
 }
