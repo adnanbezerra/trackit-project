@@ -8,9 +8,10 @@ Este é o projeto número 10 feito durante o bootcamp de Web Development da Driv
 
 - ReactJS
 - JavaScript, HTML e CSS
+- React Hooks
+- React Context
 - Axios para comunicação com as APIs
 - Validação de login de usuário com a API
-- ContextAPI
 - Styled Components
 - Router-Dom
 - Bibliotecas externas: DayJS, Circular Progressbar, LoaderSpinner

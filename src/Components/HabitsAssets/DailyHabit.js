@@ -9,6 +9,8 @@ export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, 
 
     const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
 
+    const [isRecord, setIsRecord] = useState(streak === record);
+
     const config = {
         headers: {
             Authorization: "Bearer " + loggedUser.token
@@ -25,8 +27,11 @@ export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, 
                 .catch(error => alert("Não foi possível dar check no hábito!"))
         } else {
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config)
-                .then(answer => console.log('deu bão'))
-                .catch(error => console.log("num deu bão"))
+                .then(answer => {
+                    getTodayHabits();
+                    setConcludedHabits(concludedHabits - 1)
+                })
+                .catch(error => alert("Não foi possível desmarcar o hábito!"))
         }
     }
 
@@ -35,16 +40,18 @@ export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, 
             <InfoRow>
                 <HabitTitle>{name}</HabitTitle>
                 <TitleData>Sequência atual: <Daily isConcluded={isConcluded}>{streak === 1 ? `${streak} dia` : `${streak} dias`}</Daily></TitleData>
-                <TitleData>Seu recorde: <Daily isConcluded={isConcluded}>{record === 1 ? `${record} dia` : `${record} dias`}</Daily></TitleData>
+                <TitleData>Seu recorde: <Daily isRecord={isRecord}>{record === 1 ? `${record} dia` : `${record} dias`}</Daily></TitleData>
             </InfoRow>
 
-            <ion-icon name="checkbox" onClick={taskClick} isConcluded={isConcluded}></ion-icon>
+            {isConcluded ? <ion-icon name="checkbox" onClick={taskClick} style={{ color: "#8fc549" }}></ion-icon>
+                :
+                <ion-icon name="checkbox" onClick={taskClick} style={{ color: "#ebebeb" }}></ion-icon>}
         </HabitScreen>
     )
 }
 
 const Daily = styled.span`
-    color: ${props => props.isConcluded ? "#8FC549" : "#666666"}
+    color: ${props => props.isConcluded ? "#8FC549" : props.isRecord ? "#8FC549" : "#666666"}
 `
 
 const InfoRow = styled.div`
@@ -78,7 +85,6 @@ const HabitScreen = styled.div`
     align-items: center;
 
     ion-icon {
-        color: ${props => props.isConcluded ? "#8FC549" : "#EBEBEB"};
         font-size: 70px;
     }
 `

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
+import axios from "axios";
 
 import GlobalStyle from "./Components/styles/GlobalStyle";
 import InitialScreen from "./Components/InitialScreen";
@@ -18,8 +19,30 @@ export default function App() {
   const [concludedHabits, setConcludedHabits] = useState(0)
   const [todayHabits, setTodayHabits] = useState([])
 
+  let counter = 0;
+
+  function getTodayHabits() {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + loggedUser.token
+      }
+    }
+    axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
+      .then(answer => {
+        counter = 0;
+
+        setTodayHabits([...answer.data])
+
+        for (let i = 0; i < todayHabits.length; i++) if (todayHabits[i].done === true) counter++;
+
+        setConcludedHabits(counter);
+      })
+      .catch(error => console.log("deu bãon't"));
+  }
+
+
   return (
-    <UserContext.Provider value={{ loggedUser, setLoggedUser, concludedHabits, setConcludedHabits, todayHabits, setTodayHabits }}>
+    <UserContext.Provider value={{ loggedUser, setLoggedUser, concludedHabits, setConcludedHabits, todayHabits, setTodayHabits, getTodayHabits }}>
 
       <GlobalStyle />
 

@@ -3,16 +3,20 @@ import UserContext from "./contexts/UserContext"
 import WeekDay from "./HabitsAssets/WeekDay";
 import Habit from "./HabitsAssets/Habit";
 
+import { ThreeDots } from 'react-loader-spinner';
+
 import styled from "styled-components"
 import axios from "axios";
 
 export default function HabitsScreen() {
 
-    const { loggedUser, todayHabits, setTodayHabits, concludedHabits, setConcludedHabits } = useContext(UserContext);
+    const { loggedUser, getTodayHabits } = useContext(UserContext);
     const [habitsList, setHabitsList] = useState([]);
     const [addTask, setAddTask] = useState(false);
     const [habitName, setHabitName] = useState("")
     const [weekDaysList, setWeekDaysList] = useState([])
+
+    const [disabled, setDisabled] = useState(false)
 
     const config = {
         headers: {
@@ -24,17 +28,6 @@ export default function HabitsScreen() {
         getTodayHabits()
     }, [])
 
-    function getTodayHabits() {
-        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
-        .then(answer => {
-            setTodayHabits([...answer.data])
-            for (let i = 0; i < todayHabits.length; i++) {
-                if (todayHabits[i].done === true) setConcludedHabits([...concludedHabits, todayHabits[i]])
-            }
-        })
-        .catch(error => console.log("deu bãon't"));
-    }
- 
     function getHabitsList() {
         axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
             .then(answer => setHabitsList(answer.data))
@@ -47,10 +40,11 @@ export default function HabitsScreen() {
             name: habitName,
             days: weekDaysList
         };
-        setAddTask(false);
+        setDisabled(true);
 
-        if(setWeekDaysList.length === 0) {
+        if(weekDaysList.length === 0) {
             alert('Escolha pelo menos um dia!')
+            setDisabled(false);
             return;
         }
 
@@ -60,6 +54,8 @@ export default function HabitsScreen() {
                 getTodayHabits();
                 setHabitName("");
                 setWeekDaysList([]);
+                invertAddTask();
+                setDisabled(false);
             })
             .catch((error) => console.log(error))
     }
@@ -84,7 +80,8 @@ export default function HabitsScreen() {
 
                 <ButtonsRow>
                     <Cancel onClick={invertAddTask} >Cancelar</Cancel>
-                    <SaveButton>Salvar</SaveButton>
+                    <SaveButton disabled={disabled}>{disabled ? <ThreeDots color="white" height={80} width={50} />
+                    : "Salvar"}</SaveButton>
                 </ButtonsRow>
             </Form>
         )
@@ -168,6 +165,10 @@ const SaveButton = styled.button`
 
     color: white;
     font-size: 16px;
+
+    &:disabled {
+        background-color: #86ccff;
+    }
 `
 
 const Form = styled.form`
