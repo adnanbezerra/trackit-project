@@ -14,7 +14,7 @@ export default function TodayScreen() {
             Authorization: "Bearer " + loggedUser.token
         }
     }
-    useEffect( getTodayHabits, [])
+    useEffect(getTodayHabits, [])
 
 
     const now = dayjs().locale('pt-br')
@@ -22,7 +22,7 @@ export default function TodayScreen() {
     today = today.charAt(0).toUpperCase() + today.slice(1)
 
     let percentage = 0;
-    if(todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
+    if (todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
 
     return (
         <Screen>

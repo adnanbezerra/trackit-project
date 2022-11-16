@@ -5,9 +5,9 @@ export default function WeekDay({ day, id, weekDaysList, setWeekDaysList }) {
     const [isSelected, setIsSelected] = useState(false);
 
     function addWeekDay() {
-        if (weekDaysList.some( (number) => number === id)) {
+        if (weekDaysList.some((number) => number === id)) {
             setIsSelected(false);
-            setWeekDaysList(weekDaysList.filter( (number) => number !== id));
+            setWeekDaysList(weekDaysList.filter((number) => number !== id));
         } else {
             setIsSelected(true);
             setWeekDaysList([...weekDaysList, id]);

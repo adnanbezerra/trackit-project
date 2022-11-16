@@ -41,7 +41,7 @@ export default function HabitsScreen() {
         };
         setDisabled(true);
 
-        if(weekDaysList.length === 0) {
+        if (weekDaysList.length === 0) {
             alert('Escolha pelo menos um dia!')
             setDisabled(false);
             return;
@@ -80,7 +80,7 @@ export default function HabitsScreen() {
                 <ButtonsRow>
                     <Cancel onClick={invertAddTask} >Cancelar</Cancel>
                     <SaveButton disabled={disabled}>{disabled ? <ThreeDots color="white" height={80} width={50} />
-                    : "Salvar"}</SaveButton>
+                        : "Salvar"}</SaveButton>
                 </ButtonsRow>
             </Form>
         )
@@ -97,7 +97,7 @@ export default function HabitsScreen() {
 
             {habitsList[0] ?
                 <>
-                    {habitsList.map((habit) => {return(<Habit name={habit.name} id={habit.id} days={habit.days} config={config} getHabitsList={getHabitsList} />)})}
+                    {habitsList.map((habit) => { return (<Habit name={habit.name} id={habit.id} days={habit.days} config={config} getHabitsList={getHabitsList} />) })}
                 </>
                 : <NoHay>Você não tem nenhum hábito cadastrado ainda. Adicione um novo hábito para começar a trackear!</NoHay>}
         </Screen>

@@ -7,7 +7,7 @@ import { useContext } from "react"
 export default function TopBar() {
     const { loggedUser } = useContext(UserContext);
 
-    return(
+    return (
         <Header>
             <Loguinho src={loguinho} alt="" />
             <User src={loggedUser.image} alt='' />

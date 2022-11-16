@@ -7,11 +7,11 @@ import UserContext from "../contexts/UserContext";
 
 
 export default function BottomMenu() {
-    const { concludedHabits, todayHabits } = useContext(UserContext) 
+    const { concludedHabits, todayHabits } = useContext(UserContext)
     let percentage = 0;
     let text = 'Hoje'
 
-    if(todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
+    if (todayHabits.length !== 0) percentage = 100 * (concludedHabits / todayHabits.length);
     else text = "Não há"
 
     return (
