@@ -7,7 +7,7 @@ import dayjs from "dayjs"
 import { useEffect } from "react"
 
 export default function TodayScreen() {
-    const { loggedUser, concludedHabits, todayHabits, getTodayHabits } = useContext(UserContext);
+    const { concludedHabits, todayHabits, getTodayHabits } = useContext(UserContext);
 
     useEffect(() => getTodayHabits,
         // eslint-disable-next-line react-hooks/exhaustive-deps
