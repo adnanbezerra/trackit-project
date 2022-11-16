@@ -3,13 +3,12 @@ import styled from "styled-components";
 
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
-import { useState } from "react";
 import { config } from "../mock/info";
 
 export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, record, id }) {
     const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
 
-    const [isRecord, setIsRecord] = useState(streak === record);
+    const isRecord = streak === record;
 
     function taskClick() {
         if (!isConcluded) {
