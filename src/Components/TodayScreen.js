@@ -4,7 +4,6 @@ import DailyHabit from "./HabitsAssets/DailyHabit"
 
 import styled from "styled-components"
 import dayjs from "dayjs"
-import { locale } from "dayjs/locale/pt-br"
 import { useEffect } from "react"
 
 export default function TodayScreen() {
