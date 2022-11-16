@@ -25,6 +25,8 @@ export default function HabitsScreen() {
     useEffect(() => {
         getHabitsList()
         getTodayHabits()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     function getHabitsList() {

@@ -8,12 +8,16 @@ import { useEffect } from "react"
 
 export default function TodayScreen() {
     const { loggedUser, concludedHabits, todayHabits, getTodayHabits } = useContext(UserContext);
+    
     const config = {
         headers: {
             Authorization: "Bearer " + loggedUser.token
         }
     }
-    useEffect(getTodayHabits, [])
+
+    useEffect(() => getTodayHabits,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []);
 
 
     const now = dayjs().locale('pt-br')
