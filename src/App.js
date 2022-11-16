@@ -14,7 +14,6 @@ import UserContext from "./Components/contexts/UserContext";
 import RegisterScreen from "./Components/RegisterScreen";
 
 export default function App() {
-
   const [loggedUser, setLoggedUser] = useState();
   const [concludedHabits, setConcludedHabits] = useState(0)
   const [todayHabits, setTodayHabits] = useState([])

@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { useState } from "react";
 
 export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, record, id }) {
-
     const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
 
     const [isRecord, setIsRecord] = useState(streak === record);

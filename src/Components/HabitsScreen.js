@@ -9,7 +9,6 @@ import styled from "styled-components"
 import axios from "axios";
 
 export default function HabitsScreen() {
-
     const { loggedUser, getTodayHabits } = useContext(UserContext);
     const [habitsList, setHabitsList] = useState([]);
     const [addTask, setAddTask] = useState(false);

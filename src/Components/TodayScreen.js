@@ -8,7 +8,6 @@ import { locale } from "dayjs/locale/pt-br"
 import { useEffect } from "react"
 
 export default function TodayScreen() {
-
     const { loggedUser, concludedHabits, todayHabits, getTodayHabits } = useContext(UserContext);
     const config = {
         headers: {

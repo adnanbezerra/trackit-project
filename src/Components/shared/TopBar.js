@@ -5,7 +5,6 @@ import UserContext from "../contexts/UserContext"
 import { useContext } from "react"
 
 export default function TopBar() {
-
     const { loggedUser } = useContext(UserContext);
 
     return(
