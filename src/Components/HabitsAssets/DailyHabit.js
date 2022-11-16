@@ -4,28 +4,23 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import { useContext } from "react";
 import { useState } from "react";
+import { config } from "../mock/info";
 
 export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, record, id }) {
     const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
 
     const [isRecord, setIsRecord] = useState(streak === record);
 
-    const config = {
-        headers: {
-            Authorization: "Bearer " + loggedUser.token
-        }
-    }
-
     function taskClick() {
         if (!isConcluded) {
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config)
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, null, config(loggedUser.token))
                 .then(answer => {
                     getTodayHabits();
                     setConcludedHabits(concludedHabits + 1)
                 })
                 .catch(error => alert("Não foi possível dar check no hábito!"))
         } else {
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config)
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, null, config(loggedUser.token))
                 .then(answer => {
                     getTodayHabits();
                     setConcludedHabits(concludedHabits - 1)

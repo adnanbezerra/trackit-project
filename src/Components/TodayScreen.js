@@ -8,12 +8,6 @@ import { useEffect } from "react"
 
 export default function TodayScreen() {
     const { loggedUser, concludedHabits, todayHabits, getTodayHabits } = useContext(UserContext);
-    
-    const config = {
-        headers: {
-            Authorization: "Bearer " + loggedUser.token
-        }
-    }
 
     useEffect(() => getTodayHabits,
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,7 +26,7 @@ export default function TodayScreen() {
             <ScreenTitle>{today} - {now.format('DD/MM')}</ScreenTitle>
             {concludedHabits ? <TextoHabito concluido={true}>{percentage}% dos hábitos concluídos</TextoHabito> : <TextoHabito concluido={false}>Nenhum hábito concluído ainda</TextoHabito>}
 
-            {todayHabits ? todayHabits.map((habit) => <DailyHabit id={habit.id} name={habit.name} isConcluded={habit.done} streak={habit.currentSequence} record={habit.highestSequence} config={config} getTodayHabits={getTodayHabits} />)
+            {todayHabits ? todayHabits.map((habit) => <DailyHabit id={habit.id} name={habit.name} isConcluded={habit.done} streak={habit.currentSequence} record={habit.highestSequence} getTodayHabits={getTodayHabits} />)
                 : <Content>Você não tem hábitos cadastrados para hoje</Content>}
         </Screen>
     )

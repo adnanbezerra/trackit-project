@@ -7,6 +7,7 @@ import { ThreeDots } from 'react-loader-spinner';
 
 import styled from "styled-components"
 import axios from "axios";
+import { config } from "./mock/info";
 
 export default function HabitsScreen() {
     const { loggedUser, getTodayHabits } = useContext(UserContext);
@@ -17,11 +18,6 @@ export default function HabitsScreen() {
 
     const [disabled, setDisabled] = useState(false)
 
-    const config = {
-        headers: {
-            Authorization: "Bearer " + loggedUser.token
-        }
-    }
     useEffect(() => {
         getHabitsList()
         getTodayHabits()
@@ -30,7 +26,7 @@ export default function HabitsScreen() {
     }, [])
 
     function getHabitsList() {
-        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
+        axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config(loggedUser.token))
             .then(answer => setHabitsList(answer.data))
             .catch(error => alert("Estamos com problema no servidor. Tente novamente mais tarde."))
     }
@@ -99,7 +95,7 @@ export default function HabitsScreen() {
 
             {habitsList[0] ?
                 <>
-                    {habitsList.map((habit) => { return (<Habit name={habit.name} id={habit.id} days={habit.days} config={config} getHabitsList={getHabitsList} />) })}
+                    {habitsList.map((habit) => { return (<Habit name={habit.name} id={habit.id} days={habit.days} token={config(loggedUser.token)} getHabitsList={getHabitsList} />) })}
                 </>
                 : <NoHay>Você não tem nenhum hábito cadastrado ainda. Adicione um novo hábito para começar a trackear!</NoHay>}
         </Screen>

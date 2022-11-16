@@ -1,9 +1,9 @@
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Habit({ name, id, days, config, getHabitsList }) {
+export default function Habit({ name, id, days, token, getHabitsList }) {
     function deleteHabit() {
-        axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+        axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, token)
             .then(answer => {
                 getHabitsList();
             })

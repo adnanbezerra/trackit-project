@@ -12,6 +12,7 @@ import HistoryScreen from "./Components/HistoryScreen";
 
 import UserContext from "./Components/contexts/UserContext";
 import RegisterScreen from "./Components/RegisterScreen";
+import { config } from "./Components/mock/info";
 
 export default function App() {
   const [loggedUser, setLoggedUser] = useState();
@@ -21,12 +22,7 @@ export default function App() {
   let counter = 0;
 
   function getTodayHabits() {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + loggedUser.token
-      }
-    }
-    axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config)
+    axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config(loggedUser.token))
       .then(answer => {
         counter = 0;
 
