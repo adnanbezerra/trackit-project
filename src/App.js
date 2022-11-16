@@ -4,8 +4,8 @@ import axios from "axios";
 
 import GlobalStyle from "./Components/styles/GlobalStyle";
 import InitialScreen from "./Components/InitialScreen";
-import TopBar from "./Components/shared/TopBar"
-import BottomMenu from "./Components/shared/BottomMenu"
+import TopBar from "./Components/templates/TopBar"
+import BottomMenu from "./Components/templates/BottomMenu"
 import TodayScreen from "./Components/TodayScreen";
 import HabitsScreen from "./Components/HabitsScreen";
 import HistoryScreen from "./Components/HistoryScreen";
