@@ -3,12 +3,12 @@ import { useState } from 'react';
 import axios from "axios";
 
 import GlobalStyle from "./Components/styles/GlobalStyle";
-import InitialScreen from "./Components/InitialScreen";
+import InitialScreen from "./Components/pages/InitialScreen";
 import TopBar from "./Components/templates/TopBar"
 import BottomMenu from "./Components/templates/BottomMenu"
-import TodayScreen from "./Components/TodayScreen";
-import HabitsScreen from "./Components/HabitsScreen";
-import HistoryScreen from "./Components/HistoryScreen";
+import TodayScreen from "./Components/pages/TodayScreen";
+import HabitsScreen from "./Components/pages/HabitsScreen";
+import HistoryScreen from "./Components/pages/HistoryScreen";
 
 import UserContext from "./Components/contexts/UserContext";
 import RegisterScreen from "./Components/pages/RegisterScreen";

@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import UserContext from "./contexts/UserContext"
+import UserContext from "../contexts/UserContext"
 import DailyHabit from "./HabitsAssets/DailyHabit"
 
 import styled from "styled-components"

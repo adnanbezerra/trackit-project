@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
-import UserContext from "./contexts/UserContext"
-import logo from "./Images/logo.png"
+import UserContext from "../contexts/UserContext"
+import logo from "../Images/logo.png"
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import UserContext from "./contexts/UserContext"
+import UserContext from "../contexts/UserContext"
 import WeekDay from "./HabitsAssets/WeekDay";
 import Habit from "./HabitsAssets/Habit";
 
@@ -7,7 +7,7 @@ import { ThreeDots } from 'react-loader-spinner';
 
 import styled from "styled-components"
 import axios from "axios";
-import { config } from "./mock/info";
+import { config } from "../mock/info";
 
 export default function HabitsScreen() {
     const { loggedUser, getTodayHabits } = useContext(UserContext);
