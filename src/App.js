@@ -11,7 +11,7 @@ import HabitsScreen from "./Components/HabitsScreen";
 import HistoryScreen from "./Components/HistoryScreen";
 
 import UserContext from "./Components/contexts/UserContext";
-import RegisterScreen from "./Components/RegisterScreen";
+import RegisterScreen from "./Components/pages/RegisterScreen";
 import { config } from "./Components/mock/info";
 
 export default function App() {

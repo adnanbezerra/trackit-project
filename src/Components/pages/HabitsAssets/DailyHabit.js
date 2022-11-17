@@ -1,9 +1,9 @@
 import axios from "axios";
 import styled from "styled-components";
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 import { useContext } from "react";
-import { config } from "../mock/info";
+import { config } from "../../mock/info";
 
 export default function DailyHabit({ name, isConcluded, getTodayHabits, streak, record, id }) {
     const { loggedUser, concludedHabits, setConcludedHabits } = useContext(UserContext)
