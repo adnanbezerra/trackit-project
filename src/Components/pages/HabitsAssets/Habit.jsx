@@ -10,6 +10,45 @@ export default function Habit({ name, id, days, token, getHabitsList }) {
             .catch(error => alert("Tivemos um problema ao deletar o seu hábito. Tente novamente mais tarde."))
     }
 
+    function getDaysRow() {
+        const days = [
+            {
+                number: 0,
+                name: 'D'
+            },
+            {
+                number: 1,
+                name: 'S'
+            },
+            {
+                number: 2,
+                name: 'T'
+            },
+            {
+                number: 3,
+                name: 'Q'
+            },
+            {
+                number: 4,
+                name: 'Q'
+            },
+            {
+                number: 5,
+                name: 'S'
+            },
+            {
+                number: 6,
+                name: 'S'
+            },
+        ];
+
+        return (
+            days.map(day => {
+                return <Day isSelected={days.some((number) => number === day.number)}>{day.name}</Day>
+            })
+        )
+    }
+
     return (
         <HabitDisplay>
             <Line>
@@ -18,13 +57,7 @@ export default function Habit({ name, id, days, token, getHabitsList }) {
             </Line>
 
             <DaysRow>
-                <Day isSelected={days.some((number) => number === 0)}>D</Day>
-                <Day isSelected={days.some((number) => number === 1)}>S</Day>
-                <Day isSelected={days.some((number) => number === 2)}>T</Day>
-                <Day isSelected={days.some((number) => number === 3)}>Q</Day>
-                <Day isSelected={days.some((number) => number === 4)}>Q</Day>
-                <Day isSelected={days.some((number) => number === 5)}>S</Day>
-                <Day isSelected={days.some((number) => number === 6)}>S</Day>
+                {getDaysRow()}
             </DaysRow>
         </HabitDisplay>
     )
