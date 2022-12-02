@@ -126,7 +126,7 @@ export default function HabitsScreen() {
 
             {addTask ? getAddTask() : <></>}
 
-            {habitsList[0] ?
+            {habitsList.length === 0 ?
                 <>
                     {habitsList.map((habit) => { return (<Habit name={habit.name} id={habit.id} days={habit.days} token={config(loggedUser.token)} getHabitsList={getHabitsList} />) })}
                 </>
