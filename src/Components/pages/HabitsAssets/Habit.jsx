@@ -11,7 +11,7 @@ export default function Habit({ name, id, days, token, getHabitsList }) {
     }
 
     function getDaysRow() {
-        const days = [
+        const daysList = [
             {
                 number: 0,
                 name: 'D'
@@ -43,7 +43,7 @@ export default function Habit({ name, id, days, token, getHabitsList }) {
         ];
 
         return (
-            days.map(day => {
+            daysList.map(day => {
                 return <Day isSelected={days.some((number) => number === day.number)}>{day.name}</Day>
             })
         )
