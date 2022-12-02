@@ -61,18 +61,51 @@ export default function HabitsScreen() {
         setAddTask(!addTask)
     }
 
+    function getDaysRow() {
+        const daysList = [
+            {
+                number: 0,
+                name: 'D'
+            },
+            {
+                number: 1,
+                name: 'S'
+            },
+            {
+                number: 2,
+                name: 'T'
+            },
+            {
+                number: 3,
+                name: 'Q'
+            },
+            {
+                number: 4,
+                name: 'Q'
+            },
+            {
+                number: 5,
+                name: 'S'
+            },
+            {
+                number: 6,
+                name: 'S'
+            },
+        ];
+
+        return (
+            daysList.map(day => {
+                return <WeekDay day={day.name} id={day.number} weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+            })
+        )
+    }
+
     function getAddTask() {
         return (
             <Form onSubmit={submitForm}>
                 <FormInput placeholder="nome do hábito" type='text' value={habitName} onChange={e => setHabitName(e.target.value)} />
                 <WeekDaysRow>
-                    <WeekDay day='D' id='0' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='S' id='1' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='T' id='2' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='Q' id='3' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='Q' id='4' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='S' id='5' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
-                    <WeekDay day='S' id='6' weekDaysList={weekDaysList} setWeekDaysList={setWeekDaysList} />
+                    {getDaysRow()}
                 </WeekDaysRow>
 
                 <ButtonsRow>
