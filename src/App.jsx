@@ -21,16 +21,24 @@ export default function App() {
 
   let counter = 0;
 
+  function handleRequestSuccess(answer) {
+    counter = 0;
+
+    setTodayHabits([...answer.data])
+
+    for (let i = 0; i < todayHabits.length; i++) {
+      if (todayHabits[i].done === true) {
+        counter++;
+      }
+    }
+
+    setConcludedHabits(counter);
+  }
+
   function getTodayHabits() {
     axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config(loggedUser.token))
       .then(answer => {
-        counter = 0;
-
-        setTodayHabits([...answer.data])
-
-        for (let i = 0; i < todayHabits.length; i++) if (todayHabits[i].done === true) counter++;
-
-        setConcludedHabits(counter);
+        handleRequestSuccess(answer)
       })
       .catch(error => console.log("deu bãon't"));
   }
